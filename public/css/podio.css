@@ -1,0 +1,1164 @@
+/* ===================================
+   MQ PODIO - Sistema de Premios
+   Estilos Personalizados
+   =================================== */
+
+/* ---------- Variables ---------- */
+:root {
+    --gold: #FFD700;
+    --gold-dark: #b8960f;
+    --gold-light: #fff4cc;
+    --gold-bg: linear-gradient(135deg, #FFD700, #FFA500);
+
+    --silver: #C0C0C0;
+    --silver-dark: #808080;
+    --silver-light: #e8e8e8;
+    --silver-bg: linear-gradient(135deg, #e0e0e0, #a0a0a0);
+
+    --bronze: #CD7F32;
+    --bronze-dark: #8b5a2b;
+    --bronze-light: #f0d5b0;
+    --bronze-bg: linear-gradient(135deg, #CD7F32, #8B4513);
+
+    --bg-dark: #0f0f23;
+    --bg-card: #1a1a2e;
+    --text-primary: #e0e0e0;
+    --accent: #6366f1;
+}
+
+/* ---------- Global ---------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ---------- Navbar ---------- */
+.bg-navbar {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.trophy-icon {
+    font-size: 1.8rem;
+    color: var(--gold);
+    filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    animation: trophyPulse 2s ease-in-out infinite;
+}
+
+@keyframes trophyPulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5)); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+}
+
+.brand-text {
+    font-size: 1.5rem;
+    font-weight: 800;
+    background: linear-gradient(to right, var(--gold), #FFA500, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.brand-sub {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 300;
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 0.5rem;
+}
+
+.star-pulse {
+    color: var(--gold);
+    animation: starPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes starPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* ---------- Hero Section ---------- */
+.hero-section {
+    background: linear-gradient(180deg, #0f0f23 0%, #16213e 40%, #1a1a3e 100%);
+    min-height: calc(100vh - 60px);
+    position: relative;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-section > .container {
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Area Tabs ---------- */
+.area-tabs {
+    gap: 0.5rem;
+}
+
+.area-tab-btn {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border: 2px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 50px !important;
+    padding: 0.7rem 1.5rem !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+.area-tab-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--area-color);
+    opacity: 0;
+    transition: opacity 0.4s;
+    z-index: -1;
+}
+
+.area-tab-btn:hover {
+    color: #fff !important;
+    border-color: var(--area-color) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.area-tab-btn:hover::before {
+    opacity: 0.2;
+}
+
+.area-tab-btn.active {
+    color: #fff !important;
+    border-color: var(--area-color) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 25px color-mix(in srgb, var(--area-color) 30%, transparent);
+}
+
+.area-tab-btn.active::before {
+    opacity: 1;
+}
+
+.area-tab-btn .badge {
+    font-size: 0.7rem;
+    border-radius: 50px;
+}
+
+.area-badge {
+    display: inline-block;
+    padding: 0.4rem 1.5rem;
+    border-radius: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* ---------- PODIO VISUAL ---------- */
+.podio-container {
+    position: relative;
+    padding: 2rem 0;
+    margin-bottom: 1rem;
+}
+
+.podio-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.podio-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.podio-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Crown for #1 */
+.crown-icon {
+    font-size: 2.2rem;
+    color: var(--gold);
+    margin-bottom: -5px;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.6));
+}
+
+/* ============================================
+   3D AVATAR PORTRAIT CARD SYSTEM
+   ============================================ */
+.avatar-card {
+    position: relative;
+    width: 130px;
+    height: 150px;
+    margin-bottom: 0.8rem;
+    perspective: 800px;
+    cursor: pointer;
+    animation: avatarFloat 4s ease-in-out infinite;
+}
+
+.avatar-card-gold {
+    width: 155px;
+    height: 175px;
+    animation: avatarFloatGold 3.5s ease-in-out infinite;
+}
+
+@keyframes avatarFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+@keyframes avatarFloatGold {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Inner container — receives 3D tilt */
+.avatar-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    z-index: 2;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.5s ease;
+    transform-style: preserve-3d;
+}
+
+.avatar-card-gold .avatar-card-inner {
+    border-radius: 28px;
+}
+
+/* ---- 3D avatar wrapper (solid background) ---- */
+.avatar-3d-wrap {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(145deg, #5b8fd9, #3a6dbf);
+}
+
+/* Gold: warm amber */
+.avatar-card-gold .avatar-3d-wrap,
+.avatar-3d-wrap-gold {
+    background: linear-gradient(145deg, #f5c842, #d4960a);
+}
+
+/* Silver: cool steel */
+.avatar-card-silver .avatar-3d-wrap {
+    background: linear-gradient(145deg, #8eaec5, #6b8faa);
+}
+
+/* Bronze: warm copper */
+.avatar-card-bronze .avatar-3d-wrap {
+    background: linear-gradient(145deg, #d4905a, #b06830);
+}
+
+/* Avatar icon — centered FA user icon */
+.avatar-3d-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    z-index: 1;
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                color 0.4s ease;
+}
+
+.avatar-card-gold .avatar-3d-icon {
+    font-size: 4rem;
+}
+
+.avatar-card:hover .avatar-3d-icon {
+    transform: translate(-50%, -50%) scale(1.1);
+    color: rgba(255, 255, 255, 1);
+}
+
+/* ---- Glossy shine overlay ---- */
+.avatar-card-shine {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.25) 0%,
+        rgba(255, 255, 255, 0.08) 30%,
+        transparent 50%,
+        transparent 100%
+    );
+    opacity: 0.7;
+    transition: opacity 0.4s ease;
+    border-radius: inherit;
+}
+
+.avatar-card:hover .avatar-card-shine {
+    opacity: 1;
+}
+
+/* ---- Drop shadow beneath the card ---- */
+.avatar-card-shadow {
+    position: absolute;
+    bottom: -10px;
+    left: 15%;
+    width: 70%;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.35);
+    filter: blur(10px);
+    z-index: 0;
+    transition: all 0.5s ease;
+}
+
+.avatar-card-gold .avatar-card-shadow {
+    background: rgba(212, 150, 10, 0.3);
+    filter: blur(14px);
+    bottom: -12px;
+}
+
+.avatar-card:hover .avatar-card-shadow {
+    transform: scaleX(1.15) translateY(4px);
+    opacity: 0.7;
+}
+
+/* ---- Card box-shadow per medal ---- */
+.avatar-card-gold .avatar-card-inner {
+    box-shadow:
+        0 12px 40px rgba(212, 150, 10, 0.35),
+        0 4px 12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.avatar-card-gold:hover .avatar-card-inner {
+    box-shadow:
+        0 18px 50px rgba(212, 150, 10, 0.45),
+        0 6px 16px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.avatar-card-silver .avatar-card-inner {
+    box-shadow:
+        0 10px 35px rgba(107, 143, 170, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.avatar-card-silver:hover .avatar-card-inner {
+    box-shadow:
+        0 16px 45px rgba(107, 143, 170, 0.4),
+        0 6px 16px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.avatar-card-bronze .avatar-card-inner {
+    box-shadow:
+        0 10px 35px rgba(176, 104, 48, 0.3),
+        0 4px 12px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.avatar-card-bronze:hover .avatar-card-inner {
+    box-shadow:
+        0 16px 45px rgba(176, 104, 48, 0.4),
+        0 6px 16px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* ---- Bottom gradient fade (soft depth) ---- */
+.avatar-3d-wrap::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 35%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.15), transparent);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* ---- Medal badge ---- */
+.avatar-card-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: white;
+    z-index: 5;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.avatar-card:hover .avatar-card-badge {
+    transform: scale(1.08);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+.badge-gold {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 165, 0, 0.9));
+    color: #5a4300;
+}
+
+.badge-silver {
+    background: linear-gradient(135deg, rgba(224, 224, 224, 0.9), rgba(160, 160, 160, 0.9));
+    color: #3a3a3a;
+}
+
+.badge-bronze {
+    background: linear-gradient(135deg, rgba(232, 165, 90, 0.9), rgba(139, 69, 19, 0.9));
+    color: #fff;
+}
+
+/* ---- 3D tilt active (removes transition for smooth tracking) ---- */
+.avatar-card.tilt-active .avatar-card-inner {
+    transition: none;
+}
+
+/* Table avatar icon */
+.employee-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #5b8fd9, #3a6dbf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.table-avatar-icon {
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.employee-avatar.avatar-oro {
+    background: linear-gradient(145deg, #f5c842, #d4960a);
+}
+
+.employee-avatar.avatar-plata {
+    background: linear-gradient(145deg, #8eaec5, #6b8faa);
+}
+
+.employee-avatar.avatar-bronce {
+    background: linear-gradient(145deg, #d4905a, #b06830);
+}
+
+/* Medal badge styling kept for table avatars */
+
+/* Names */
+.podio-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    margin-bottom: 0.3rem;
+    max-width: 160px;
+    line-height: 1.2;
+}
+
+.podio-name-gold {
+    font-size: 1.1rem;
+    background: linear-gradient(to right, var(--gold), #FFA500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Points */
+.podio-points {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.podio-points .fa-star {
+    color: var(--gold);
+    font-size: 0.75rem;
+}
+
+/* Medal labels */
+.podio-medal-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.2rem 0.8rem;
+    border-radius: 50px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.gold-label {
+    color: var(--gold);
+    background: rgba(255, 215, 0, 0.15);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.silver-label {
+    color: var(--silver);
+    background: rgba(192, 192, 192, 0.15);
+    border: 1px solid rgba(192, 192, 192, 0.3);
+}
+
+.bronze-label {
+    color: var(--bronze);
+    background: rgba(205, 127, 50, 0.15);
+    border: 1px solid rgba(205, 127, 50, 0.3);
+}
+
+/* Pedestals */
+.podio-pedestal {
+    width: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px 12px 0 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.podio-pedestal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+.pedestal-number {
+    font-size: 3rem;
+    font-weight: 900;
+    opacity: 0.25;
+    color: white;
+}
+
+.pedestal-gold {
+    height: 140px;
+    background: linear-gradient(180deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.15) 100%);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+    border-bottom: none;
+}
+
+.pedestal-gold::before { background: var(--gold-bg); }
+
+.pedestal-silver {
+    height: 110px;
+    background: linear-gradient(180deg, rgba(192, 192, 192, 0.25) 0%, rgba(128, 128, 128, 0.1) 100%);
+    border: 1px solid rgba(192, 192, 192, 0.2);
+    border-bottom: none;
+}
+
+.pedestal-silver::before { background: var(--silver-bg); }
+
+.pedestal-bronze {
+    height: 85px;
+    background: linear-gradient(180deg, rgba(205, 127, 50, 0.25) 0%, rgba(139, 69, 19, 0.1) 100%);
+    border: 1px solid rgba(205, 127, 50, 0.2);
+    border-bottom: none;
+}
+
+.pedestal-bronze::before { background: var(--bronze-bg); }
+
+/* ---------- Confetti ---------- */
+.confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.confetti-piece {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--color);
+    top: -10px;
+    left: 50%;
+    opacity: 0;
+    border-radius: 2px;
+    animation: confettiFall 4s ease-in-out var(--delay) infinite;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateX(var(--x)) translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(var(--x) * 3)) translateY(500px) rotate(720deg);
+        opacity: 0;
+    }
+}
+
+/* ---------- TABLE SECTION ---------- */
+.card-custom {
+    background: var(--bg-card) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.card-header-custom {
+    border-bottom: none;
+    padding: 1.2rem 1.5rem;
+}
+
+.card-header-custom h4 {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+/* ---------- FORCE dark theme on ALL table elements ---------- */
+.card-custom,
+.card-custom .card-body,
+.card-custom .dataTables_wrapper {
+    background: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Table itself */
+.table-ranking,
+.table-ranking tbody,
+.table-ranking thead,
+.table-ranking tfoot,
+table.dataTable {
+    color: var(--text-primary) !important;
+    background-color: var(--bg-card) !important;
+    border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Override Bootstrap .table base bg */
+.table-ranking.table {
+    --bs-table-bg: transparent !important;
+    --bs-table-color: var(--text-primary) !important;
+    --bs-table-striped-bg: rgba(255,255,255,0.03) !important;
+    --bs-table-hover-bg: rgba(255,255,255,0.06) !important;
+    --bs-table-border-color: rgba(255,255,255,0.06) !important;
+    background-color: transparent !important;
+}
+
+/* Head */
+.table-ranking thead th,
+.table-ranking thead td,
+table.dataTable thead th,
+table.dataTable thead td {
+    background-color: rgba(255, 255, 255, 0.04) !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1) !important;
+    border-top: none !important;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 1rem 0.75rem !important;
+}
+
+/* Body rows */
+.table-ranking tbody tr {
+    background-color: transparent !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.table-ranking tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    transform: scale(1.005);
+}
+
+/* Body cells */
+.table-ranking tbody td {
+    padding: 0.85rem 0.75rem !important;
+    vertical-align: middle;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+    color: var(--text-primary) !important;
+    background-color: transparent !important;
+}
+
+/* Odd/even row striping override */
+.table-ranking tbody tr:nth-child(odd),
+.table-ranking tbody tr:nth-child(even),
+table.dataTable tbody tr:nth-child(odd),
+table.dataTable tbody tr:nth-child(even),
+.table-ranking.table-striped > tbody > tr:nth-of-type(odd) > *,
+.table-ranking.table-striped > tbody > tr:nth-of-type(even) > * {
+    background-color: transparent !important;
+    color: var(--text-primary) !important;
+    box-shadow: none !important;
+}
+
+/* DataTables "No data" row */
+.table-ranking tbody .dataTables_empty,
+table.dataTable tbody td.dataTables_empty {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Row highlight colors for top 3 */
+.row-oro,
+.row-oro td,
+table.dataTable tbody tr.row-oro,
+table.dataTable tbody tr.row-oro td {
+    background-color: rgba(255, 215, 0, 0.1) !important;
+    border-left: 4px solid var(--gold) !important;
+}
+
+.row-oro:hover,
+.row-oro:hover td,
+table.dataTable tbody tr.row-oro:hover,
+table.dataTable tbody tr.row-oro:hover td {
+    background-color: rgba(255, 215, 0, 0.18) !important;
+}
+
+.row-plata,
+.row-plata td,
+table.dataTable tbody tr.row-plata,
+table.dataTable tbody tr.row-plata td {
+    background-color: rgba(192, 192, 192, 0.08) !important;
+    border-left: 4px solid var(--silver) !important;
+}
+
+.row-plata:hover,
+.row-plata:hover td,
+table.dataTable tbody tr.row-plata:hover,
+table.dataTable tbody tr.row-plata:hover td {
+    background-color: rgba(192, 192, 192, 0.15) !important;
+}
+
+.row-bronce,
+.row-bronce td,
+table.dataTable tbody tr.row-bronce,
+table.dataTable tbody tr.row-bronce td {
+    background-color: rgba(205, 127, 50, 0.08) !important;
+    border-left: 4px solid var(--bronze) !important;
+}
+
+.row-bronce:hover,
+.row-bronce:hover td,
+table.dataTable tbody tr.row-bronce:hover,
+table.dataTable tbody tr.row-bronce:hover td {
+    background-color: rgba(205, 127, 50, 0.15) !important;
+}
+
+/* Position badges */
+.position-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-weight: 800;
+    font-size: 0.9rem;
+}
+
+.position-oro {
+    background: var(--gold-bg);
+    color: #5a4300;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+}
+
+.position-plata {
+    background: var(--silver-bg);
+    color: #3a3a3a;
+    box-shadow: 0 0 15px rgba(192, 192, 192, 0.3);
+}
+
+.position-bronce {
+    background: var(--bronze-bg);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(205, 127, 50, 0.3);
+}
+
+.position-normal {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.95rem;
+}
+
+/* Employee avatars in table - overrides */
+.avatar-oro {
+    background: linear-gradient(145deg, #f5c842, #d4960a);
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+.avatar-plata {
+    background: linear-gradient(145deg, #8eaec5, #6b8faa);
+    border: 2px solid var(--silver);
+    box-shadow: 0 0 8px rgba(192, 192, 192, 0.3);
+}
+
+.avatar-bronce {
+    background: linear-gradient(145deg, #d4905a, #b06830);
+    border: 2px solid var(--bronze);
+    box-shadow: 0 0 8px rgba(205, 127, 50, 0.3);
+}
+
+.employee-name {
+    color: #fff;
+}
+
+/* Points badges */
+.points-badge {
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.points-oro {
+    background: rgba(255, 215, 0, 0.15);
+    color: var(--gold);
+}
+
+.points-plata {
+    background: rgba(192, 192, 192, 0.15);
+    color: var(--silver);
+}
+
+.points-bronce {
+    background: rgba(205, 127, 50, 0.15);
+    color: var(--bronze);
+}
+
+.points-badge .fa-star {
+    color: var(--gold);
+    font-size: 0.7rem;
+}
+
+/* Medal tags */
+.medal-tag {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.medal-tag-gold {
+    background: var(--gold-bg);
+    color: #5a4300;
+    box-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+.medal-tag-silver {
+    background: var(--silver-bg);
+    color: #3a3a3a;
+    box-shadow: 0 2px 10px rgba(192, 192, 192, 0.3);
+}
+
+.medal-tag-bronze {
+    background: var(--bronze-bg);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(205, 127, 50, 0.3);
+}
+
+@keyframes shimmer {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.3); }
+}
+
+/* ---------- DataTables dark theme overrides ---------- */
+/* Wrapper controls */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter,
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate,
+.dataTables_wrapper .dataTables_processing,
+.dataTables_wrapper label {
+    color: rgba(255, 255, 255, 0.6) !important;
+    padding: 0.8rem 1rem !important;
+}
+
+/* Search input & length select */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    padding: 0.4rem 0.8rem !important;
+}
+
+.dataTables_wrapper .dataTables_filter input::placeholder {
+    color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.dataTables_wrapper .dataTables_filter input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15) !important;
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dataTables_wrapper .dataTables_length select option {
+    background-color: #1a1a2e !important;
+    color: #fff !important;
+}
+
+/* Pagination buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button,
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next {
+    color: rgba(255, 255, 255, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    background-image: none !important;
+    border-radius: 6px !important;
+    margin: 0 2px !important;
+    transition: all 0.3s !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover,
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover {
+    background-color: rgba(99, 102, 241, 0.3) !important;
+    background-image: none !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background-color: var(--accent) !important;
+    background-image: none !important;
+    color: #fff !important;
+    border-color: var(--accent) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
+    opacity: 0.3 !important;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: rgba(255, 255, 255, 0.3) !important;
+    border-color: rgba(255, 255, 255, 0.05) !important;
+    cursor: default !important;
+}
+
+/* Sorting icons */
+table.dataTable thead .sorting::before,
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::before,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::before,
+table.dataTable thead .sorting_desc::after {
+    opacity: 0.3 !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+}
+
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::after {
+    opacity: 0.8 !important;
+    color: var(--accent) !important;
+}
+
+/* DataTables wrapper border fix */
+.dataTables_wrapper .row {
+    margin: 0 !important;
+}
+
+table.dataTable {
+    border-collapse: collapse !important;
+}
+
+table.dataTable.table-bordered {
+    border: none !important;
+}
+
+/* Override any Bootstrap table-hover white bg */
+.table-hover > tbody > tr:hover > * {
+    --bs-table-hover-bg: transparent !important;
+    --bs-table-accent-bg: transparent !important;
+    background-color: rgba(255, 255, 255, 0.06) !important;
+    color: var(--text-primary) !important;
+}
+
+/* ---------- Footer ---------- */
+.footer-custom {
+    background: rgba(0, 0, 0, 0.3);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ---------- SweetAlert2 customization ---------- */
+.swal-podio-popup {
+    background: linear-gradient(135deg, #1a1a2e, #16213e) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5) !important;
+}
+
+.swal-podio-popup .swal2-title {
+    color: #fff !important;
+}
+
+.swal-podio-popup .swal2-html-container {
+    color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.swal-podio-confirm {
+    background: var(--accent) !important;
+    border-radius: 50px !important;
+    padding: 0.6rem 2rem !important;
+    font-weight: 600 !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+    .podio-wrapper {
+        gap: 0.4rem;
+    }
+
+    .podio-pedestal {
+        width: 100px;
+    }
+
+    .avatar-card {
+        width: 95px;
+        height: 110px;
+    }
+
+    .avatar-card-gold {
+        width: 115px;
+        height: 130px;
+    }
+
+    .avatar-card-inner {
+        border-radius: 18px;
+    }
+
+    .avatar-card-badge {
+        padding: 3px 8px;
+        font-size: 0.65rem;
+        bottom: 6px;
+        right: 6px;
+    }
+
+    .podio-name {
+        font-size: 0.75rem;
+        max-width: 100px;
+    }
+
+    .podio-name-gold {
+        font-size: 0.85rem;
+    }
+
+    .crown-icon {
+        font-size: 1.5rem;
+    }
+
+    .pedestal-gold { height: 110px; }
+    .pedestal-silver { height: 85px; }
+    .pedestal-bronze { height: 65px; }
+
+    .pedestal-number {
+        font-size: 2rem;
+    }
+
+    .area-tab-btn {
+        font-size: 0.8rem !important;
+        padding: 0.5rem 1rem !important;
+    }
+
+    .hero-section .display-4 {
+        font-size: 1.8rem;
+    }
+
+    .confetti-piece {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .podio-pedestal {
+        width: 80px;
+    }
+
+    .podio-medal-label {
+        font-size: 0.65rem;
+        padding: 0.15rem 0.5rem;
+    }
+
+    .area-tabs {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .area-tab-btn {
+        width: 100%;
+        max-width: 280px;
+    }
+}
+
+/* ---------- Scrollbar ---------- */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-dark);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.25);
+}
