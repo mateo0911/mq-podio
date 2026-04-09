@@ -62,7 +62,7 @@ $(document).ready(function () {
             $({ val: 0 }).animate(
                 { val: target },
                 {
-                    duration: 1500,
+                    duration: 2500,
                     easing: "swing",
                     step: function () {
                         $this.text(Math.floor(this.val));
@@ -75,8 +75,359 @@ $(document).ready(function () {
         });
     }
 
-    // Animate counters for the initially active tab
-    animateCounters($(".tab-pane.active"));
+    var $podiosGrid = $(".podios-grid");
+    if ($podiosGrid.find(".podio-area-card").length <= 1) {
+        animateCounters($podiosGrid);
+    }
+
+    // ============================================
+    // Podium Auto-Rotation (10s)
+    // ============================================
+    function resetAndAnimateCounters($container) {
+        $container.find(".points-counter").each(function () {
+            $(this).data("animated", false).text("0");
+        });
+        animateCounters($container);
+    }
+
+    function initPodioRotation() {
+        var $grid = $(".podios-grid");
+        var $cards = $grid.find(".podio-area-card");
+        var $controls = $("#podioCarouselControls");
+        var $progressWrap = $("#podioProgressWrap");
+        var $prevBtn = $controls.find('[data-podio-nav="prev"]');
+        var $nextBtn = $controls.find('[data-podio-nav="next"]');
+        var $dots = $controls.find(".podio-dot");
+        var $dotsWrap = $controls.find(".podio-dots");
+        var $progressBar = $("#podioProgressBar");
+
+        if ($cards.length <= 1) {
+            $controls.hide();
+            $progressWrap.hide();
+            return;
+        }
+
+        var activeIndex = 0;
+        var timeoutId = null;
+        var isTransitioning = false;
+        var transitionMs = 900;
+        var changeEveryMs = 10000;
+        var dragThreshold = 70;
+        var isPointerDown = false;
+        var dragStartX = 0;
+        var dragStartY = 0;
+        var dragDeltaX = 0;
+        var isHorizontalDrag = false;
+        var dragStartTs = 0;
+        var remainingMs = changeEveryMs;
+        var rotationStartedAt = 0;
+        var isDotsScrubbing = false;
+
+        $cards.removeClass("animate__animated animate__fadeInUp");
+        $grid.addClass("is-rotating");
+        $grid.attr("tabindex", "0");
+        $cards.removeClass("is-active is-leaving");
+        $cards.eq(activeIndex).addClass("is-active");
+
+        function updateDots(index) {
+            $dots.removeClass("is-active");
+            $dots.eq(index).addClass("is-active");
+        }
+
+        function updateGridHeight($card) {
+            $grid.css("min-height", $card.outerHeight(true) + "px");
+        }
+
+        function setProgressInstant(percent) {
+            $progressBar.css({
+                transition: "none",
+                width: percent + "%",
+            });
+        }
+
+        function animateProgress(remaining) {
+            var consumed = ((changeEveryMs - remaining) / changeEveryMs) * 100;
+            setProgressInstant(Math.max(0, Math.min(100, consumed)));
+            void $progressBar[0]?.offsetWidth;
+            $progressBar.css({
+                transition: "width " + remaining + "ms linear",
+                width: "100%",
+            });
+        }
+
+        function goTo(nextIndex) {
+            if (isTransitioning || nextIndex === activeIndex) {
+                return false;
+            }
+
+            isTransitioning = true;
+
+            var $current = $cards.eq(activeIndex);
+            var $next = $cards.eq(nextIndex);
+
+            $grid.removeClass("is-dragging").css("--drag-x", "0px");
+            $current.addClass("is-leaving").removeClass("is-active");
+            $next.addClass("is-active");
+            activeIndex = nextIndex;
+            updateDots(activeIndex);
+
+            updateGridHeight($next);
+            resetAndAnimateCounters($next);
+
+            window.setTimeout(function () {
+                $current.removeClass("is-leaving");
+                isTransitioning = false;
+            }, transitionMs);
+
+            return true;
+        }
+
+        function startRotation() {
+            if (timeoutId) {
+                return;
+            }
+
+            if (remainingMs <= 0) {
+                remainingMs = changeEveryMs;
+            }
+
+            rotationStartedAt = Date.now();
+            animateProgress(remainingMs);
+
+            timeoutId = window.setTimeout(function () {
+                timeoutId = null;
+                var moved = goNext();
+                remainingMs = changeEveryMs;
+                if (!moved) {
+                    remainingMs = changeEveryMs;
+                }
+                startRotation();
+            }, remainingMs);
+        }
+
+        function stopRotation(preserveRemaining) {
+            if (preserveRemaining === undefined) {
+                preserveRemaining = true;
+            }
+
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+
+            if (preserveRemaining && rotationStartedAt) {
+                var elapsed = Date.now() - rotationStartedAt;
+                remainingMs = Math.max(0, remainingMs - elapsed);
+            } else if (!preserveRemaining) {
+                remainingMs = changeEveryMs;
+            }
+
+            var consumed = ((changeEveryMs - remainingMs) / changeEveryMs) * 100;
+            setProgressInstant(Math.max(0, Math.min(100, consumed)));
+        }
+
+        function restartRotation() {
+            stopRotation(false);
+            startRotation();
+        }
+
+        function goNext() {
+            var next = (activeIndex + 1) % $cards.length;
+            return goTo(next);
+        }
+
+        function goPrev() {
+            var next = (activeIndex - 1 + $cards.length) % $cards.length;
+            return goTo(next);
+        }
+
+        function nearestDotIndexFromClientX(clientX) {
+            var nearestIndex = activeIndex;
+            var nearestDistance = Number.POSITIVE_INFINITY;
+
+            $dots.each(function (idx) {
+                var rect = this.getBoundingClientRect();
+                var center = rect.left + rect.width / 2;
+                var distance = Math.abs(clientX - center);
+                if (distance < nearestDistance) {
+                    nearestDistance = distance;
+                    nearestIndex = idx;
+                }
+            });
+
+            return nearestIndex;
+        }
+
+        function getPointFromEvent(e) {
+            var original = e.originalEvent;
+            if (original && original.touches && original.touches.length) {
+                return original.touches[0];
+            }
+            if (original && original.changedTouches && original.changedTouches.length) {
+                return original.changedTouches[0];
+            }
+            return e;
+        }
+
+        function onDragStart(e) {
+            if (isTransitioning) {
+                return;
+            }
+
+            var point = getPointFromEvent(e);
+            isPointerDown = true;
+            isHorizontalDrag = false;
+            dragStartX = point.clientX;
+            dragStartY = point.clientY;
+            dragDeltaX = 0;
+            dragStartTs = Date.now();
+            stopRotation(true);
+        }
+
+        function onDragMove(e) {
+            if (!isPointerDown || isTransitioning) {
+                return;
+            }
+
+            var point = getPointFromEvent(e);
+            var deltaX = point.clientX - dragStartX;
+            var deltaY = point.clientY - dragStartY;
+
+            if (!isHorizontalDrag) {
+                if (Math.abs(deltaX) < 8) {
+                    return;
+                }
+                if (Math.abs(deltaX) <= Math.abs(deltaY)) {
+                    return;
+                }
+                isHorizontalDrag = true;
+            }
+
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+
+            dragDeltaX = deltaX;
+            var clamped = Math.max(-140, Math.min(140, dragDeltaX));
+            $grid.addClass("is-dragging").css("--drag-x", clamped + "px");
+        }
+
+        function onDragEnd() {
+            if (!isPointerDown) {
+                return;
+            }
+
+            isPointerDown = false;
+
+            if (!isHorizontalDrag) {
+                startRotation();
+                return;
+            }
+
+            $grid.removeClass("is-dragging").css("--drag-x", "0px");
+
+            var elapsed = Math.max(1, Date.now() - dragStartTs);
+            var velocityX = dragDeltaX / elapsed;
+            var hasMomentum = Math.abs(velocityX) >= 0.45;
+            var shouldMove = Math.abs(dragDeltaX) >= dragThreshold || hasMomentum;
+
+            if (shouldMove) {
+                if (dragDeltaX < 0) {
+                    goNext();
+                } else {
+                    goPrev();
+                }
+                restartRotation();
+            } else {
+                startRotation();
+            }
+        }
+
+        updateGridHeight($cards.eq(activeIndex));
+        resetAndAnimateCounters($cards.eq(activeIndex));
+        updateDots(activeIndex);
+        startRotation();
+
+        $grid.on("mouseenter", function () {
+            stopRotation(true);
+        });
+        $grid.on("mouseleave", startRotation);
+
+        $prevBtn.on("click", function () {
+            goPrev();
+            restartRotation();
+        });
+
+        $nextBtn.on("click", function () {
+            goNext();
+            restartRotation();
+        });
+
+        $dots.on("click", function () {
+            var idx = parseInt($(this).data("podio-index"), 10);
+            if (Number.isNaN(idx)) {
+                return;
+            }
+            goTo(idx);
+            restartRotation();
+        });
+
+        // Dot scrubber drag: arrastra sobre los puntos para moverte podio a podio
+        $dotsWrap.on("mousedown touchstart", function (e) {
+            var point = getPointFromEvent(e);
+            isDotsScrubbing = true;
+            stopRotation(true);
+            var idx = nearestDotIndexFromClientX(point.clientX);
+            goTo(idx);
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        });
+
+        $(document).on("mousemove touchmove", function (e) {
+            if (!isDotsScrubbing) {
+                return;
+            }
+            var point = getPointFromEvent(e);
+            var idx = nearestDotIndexFromClientX(point.clientX);
+            goTo(idx);
+            if (e.cancelable) {
+                e.preventDefault();
+            }
+        });
+
+        $(document).on("mouseup touchend touchcancel", function () {
+            if (!isDotsScrubbing) {
+                return;
+            }
+            isDotsScrubbing = false;
+            restartRotation();
+        });
+
+        // Mouse/touch swipe drag support
+        $grid.on("mousedown touchstart", onDragStart);
+        $(document).on("mousemove touchmove", onDragMove);
+        $(document).on("mouseup touchend touchcancel", onDragEnd);
+
+        // Keyboard controls for accessibility/pro mode
+        $grid.on("keydown", function (e) {
+            if (e.key === "ArrowRight") {
+                goNext();
+                restartRotation();
+                e.preventDefault();
+            } else if (e.key === "ArrowLeft") {
+                goPrev();
+                restartRotation();
+                e.preventDefault();
+            }
+        });
+
+        $(window).on("resize", function () {
+            updateGridHeight($cards.eq(activeIndex));
+        });
+    }
+
+    initPodioRotation();
 
     // ============================================
     // Tab Change Animations
@@ -85,23 +436,25 @@ $(document).ready(function () {
         var target = $(e.target).data("bs-target");
         var $pane = $(target);
 
-        // Reset and re-animate counter
-        $pane.find(".points-counter").data("animated", false);
-        animateCounters($pane);
-
-        // Re-animate podio elements
-        $pane.find(".podio-container").removeClass("animate__fadeInUp");
-        void $pane.find(".podio-container")[0]?.offsetWidth; // force reflow
-        $pane.find(".podio-container").addClass("animate__fadeInUp");
-
         $pane.find(".table-section").removeClass("animate__fadeInUp");
         void $pane.find(".table-section")[0]?.offsetWidth;
         $pane.find(".table-section").addClass("animate__fadeInUp");
 
-        // Re-initialize tilt for new tab's avatar cards
-        $pane.find('[data-tilt]').each(function () {
+        // Reinitialize DataTable if not already done
+        var tableId = $pane.find(".table-ranking").attr("id");
+        if (tableId && !$.fn.DataTable.isDataTable("#" + tableId)) {
+            $("#" + tableId).DataTable(dtConfig);
+        }
+    });
+
+    // ============================================
+    // 3D Avatar Tilt Effect
+    // ============================================
+    function initTilt($elements) {
+        $elements.each(function () {
             var $card = $(this);
             var $inner = $card.find('.avatar-card-inner');
+
             $card.off('mousemove mouseleave mouseenter');
 
             $card.on('mousemove', function (e) {
@@ -112,6 +465,7 @@ $(document).ready(function () {
                 var centerY = rect.height / 2;
                 var rotateX = ((y - centerY) / centerY) * -15;
                 var rotateY = ((x - centerX) / centerX) * 15;
+
                 $card.addClass('tilt-active');
                 $inner.css('transform', 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.05)');
             });
@@ -128,46 +482,9 @@ $(document).ready(function () {
                 $inner.css('transition', 'none');
             });
         });
+    }
 
-        // Reinitialize DataTable if not already done
-        var tableId = $pane.find(".table-ranking").attr("id");
-        if (tableId && !$.fn.DataTable.isDataTable("#" + tableId)) {
-            $("#" + tableId).DataTable(dtConfig);
-        }
-    });
-
-    // ============================================
-    // 3D Avatar Tilt Effect
-    // ============================================
-    $('[data-tilt]').each(function () {
-        var $card = $(this);
-        var $inner = $card.find('.avatar-card-inner');
-
-        $card.on('mousemove', function (e) {
-            var rect = this.getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var y = e.clientY - rect.top;
-            var centerX = rect.width / 2;
-            var centerY = rect.height / 2;
-            var rotateX = ((y - centerY) / centerY) * -15;
-            var rotateY = ((x - centerX) / centerX) * 15;
-
-            $card.addClass('tilt-active');
-            $inner.css('transform', 'perspective(600px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.05)');
-        });
-
-        $card.on('mouseleave', function () {
-            $card.removeClass('tilt-active');
-            $inner.css({
-                'transform': 'perspective(600px) rotateX(0deg) rotateY(0deg) scale(1)',
-                'transition': 'transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-            });
-        });
-
-        $card.on('mouseenter', function () {
-            $inner.css('transition', 'none');
-        });
-    });
+    initTilt($('[data-tilt]'));
 
     // ============================================
     // Employee Click — SweetAlert2 Modal

@@ -13,49 +13,26 @@
             <p class="lead text-white-50">Reconocemos el esfuerzo y dedicación de nuestros mejores empleados</p>
         </div>
 
-        {{-- Tabs de Áreas --}}
-        <ul class="nav nav-pills justify-content-center area-tabs mb-4" id="areaTabs" role="tablist">
-            @foreach($areas as $index => $area)
-                <li class="nav-item mx-1" role="presentation">
-                    <button
-                        class="nav-link area-tab-btn {{ $index === 0 ? 'active' : '' }}"
-                        id="tab-{{ $index }}"
-                        data-bs-toggle="pill"
-                        data-bs-target="#area-{{ $index }}"
-                        type="button"
-                        role="tab"
-                        aria-controls="area-{{ $index }}"
-                        aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
-                        style="--area-color: {{ $area['color'] }}"
-                    >
-                        <i class="fa-solid {{ $area['icono'] }} me-2"></i>{{ $area['nombre'] }}
-                        <span class="badge bg-light text-dark ms-2">{{ count($area['empleados']) }}</span>
-                    </button>
-                </li>
-            @endforeach
-        </ul>
+        {{-- Podios generales (todas las áreas visibles) --}}
+        <div class="podio-progress-wrap" id="podioProgressWrap" aria-hidden="true">
+            <div class="podio-progress">
+                <span class="podio-progress-bar" id="podioProgressBar"></span>
+            </div>
+        </div>
 
-        {{-- Tab Content --}}
-        <div class="tab-content" id="areaTabsContent">
+        <div class="podios-grid">
             @foreach($areas as $index => $area)
                 @php
                     $top3 = array_slice($area['empleados'], 0, 3);
                 @endphp
-                <div
-                    class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
-                    id="area-{{ $index }}"
-                    role="tabpanel"
-                    aria-labelledby="tab-{{ $index }}"
-                >
-                    {{-- Area Title Badge --}}
+                <section class="podio-area-card" style="--area-color: {{ $area['color'] }}">
                     <div class="text-center mb-4">
                         <span class="area-badge" style="background: {{ $area['color'] }}">
                             <i class="fa-solid {{ $area['icono'] }} me-2"></i>{{ $area['nombre'] }}
                         </span>
                     </div>
 
-                    {{-- ======== PODIO VISUAL ======== --}}
-                    <div class="podio-container animate__animated animate__fadeInUp">
+                    <div class="podio-container">
                         <div class="podio-wrapper">
                             {{-- Puesto 2 - Plata (Izquierda) --}}
                             <div class="podio-item podio-plata">
@@ -149,7 +126,61 @@
                             @endfor
                         </div>
                     </div>
+                </section>
+            @endforeach
+        </div>
 
+        <div class="podio-carousel-controls" id="podioCarouselControls" aria-label="Navegacion de podios">
+            <button type="button" class="podio-nav-btn" data-podio-nav="prev" aria-label="Podio anterior">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <div class="podio-dots" role="tablist" aria-label="Seleccion de podio">
+                @foreach($areas as $index => $area)
+                    <button
+                        type="button"
+                        class="podio-dot {{ $index === 0 ? 'is-active' : '' }}"
+                        data-podio-index="{{ $index }}"
+                        aria-label="Ir a {{ $area['nombre'] }}"
+                        title="{{ $area['nombre'] }}"
+                    ></button>
+                @endforeach
+            </div>
+            <button type="button" class="podio-nav-btn" data-podio-nav="next" aria-label="Podio siguiente">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+        </div>
+
+        {{-- Tabs de Áreas --}}
+        <ul class="nav nav-pills justify-content-center area-tabs mb-4" id="areaTabs" role="tablist">
+            @foreach($areas as $index => $area)
+                <li class="nav-item mx-1" role="presentation">
+                    <button
+                        class="nav-link area-tab-btn {{ $index === 0 ? 'active' : '' }}"
+                        id="tab-{{ $index }}"
+                        data-bs-toggle="pill"
+                        data-bs-target="#area-{{ $index }}"
+                        type="button"
+                        role="tab"
+                        aria-controls="area-{{ $index }}"
+                        aria-selected="{{ $index === 0 ? 'true' : 'false' }}"
+                        style="--area-color: {{ $area['color'] }}"
+                    >
+                        <i class="fa-solid {{ $area['icono'] }} me-2"></i>{{ $area['nombre'] }}
+                        <span class="badge bg-light text-dark ms-2">{{ count($area['empleados']) }}</span>
+                    </button>
+                </li>
+            @endforeach
+        </ul>
+
+        {{-- Tab Content --}}
+        <div class="tab-content" id="areaTabsContent">
+            @foreach($areas as $index => $area)
+                <div
+                    class="tab-pane fade {{ $index === 0 ? 'show active' : '' }}"
+                    id="area-{{ $index }}"
+                    role="tabpanel"
+                    aria-labelledby="tab-{{ $index }}"
+                >
                     {{-- ======== TABLA DE EMPLEADOS ======== --}}
                     <div class="table-section mt-5 animate__animated animate__fadeInUp">
                         <div class="card card-custom">

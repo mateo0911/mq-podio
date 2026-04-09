@@ -75,6 +75,86 @@ class PodioController extends Controller
             ['nombre' => 'Martín Pedraza', 'puntos' => 680, 'genero' => 'M'],
         ];
 
+        $auxiliares = [
+            ['nombre' => 'Kevin Andrade', 'puntos' => 930, 'genero' => 'M'],
+            ['nombre' => 'Paola Cedeño', 'puntos' => 910, 'genero' => 'F'],
+            ['nombre' => 'Byron Zambrano', 'puntos' => 895, 'genero' => 'M'],
+            ['nombre' => 'Tatiana Bravo', 'puntos' => 880, 'genero' => 'F'],
+            ['nombre' => 'Jorge Galarza', 'puntos' => 865, 'genero' => 'M'],
+            ['nombre' => 'Mireya Jurado', 'puntos' => 850, 'genero' => 'F'],
+            ['nombre' => 'Cristian Mera', 'puntos' => 835, 'genero' => 'M'],
+            ['nombre' => 'Erika Vintimilla', 'puntos' => 820, 'genero' => 'F'],
+            ['nombre' => 'Ronaldo Vera', 'puntos' => 805, 'genero' => 'M'],
+            ['nombre' => 'Karla Quinde', 'puntos' => 790, 'genero' => 'F'],
+            ['nombre' => 'Álvaro Chica', 'puntos' => 775, 'genero' => 'M'],
+            ['nombre' => 'Nayeli Proaño', 'puntos' => 760, 'genero' => 'F'],
+            ['nombre' => 'Mateo Pita', 'puntos' => 748, 'genero' => 'M'],
+            ['nombre' => 'Ruth Montalvo', 'puntos' => 735, 'genero' => 'F'],
+            ['nombre' => 'Ernesto Cueva', 'puntos' => 720, 'genero' => 'M'],
+            ['nombre' => 'Diana Cornejo', 'puntos' => 705, 'genero' => 'F'],
+            ['nombre' => 'Joel Valencia', 'puntos' => 690, 'genero' => 'M'],
+        ];
+
+        $litografos = [
+            ['nombre' => 'Esteban Ruilova', 'puntos' => 955, 'genero' => 'M'],
+            ['nombre' => 'Andrea Burbano', 'puntos' => 938, 'genero' => 'F'],
+            ['nombre' => 'Simón Alvarado', 'puntos' => 920, 'genero' => 'M'],
+            ['nombre' => 'Milena Rosales', 'puntos' => 902, 'genero' => 'F'],
+            ['nombre' => 'Pablo Cárdenas', 'puntos' => 886, 'genero' => 'M'],
+            ['nombre' => 'Belén Narváez', 'puntos' => 870, 'genero' => 'F'],
+            ['nombre' => 'Renato Freire', 'puntos' => 854, 'genero' => 'M'],
+            ['nombre' => 'Noelia Jaramillo', 'puntos' => 840, 'genero' => 'F'],
+            ['nombre' => 'Cristóbal Endara', 'puntos' => 825, 'genero' => 'M'],
+            ['nombre' => 'Yadira Loza', 'puntos' => 808, 'genero' => 'F'],
+            ['nombre' => 'Nicolás Alvear', 'puntos' => 792, 'genero' => 'M'],
+            ['nombre' => 'Brenda Aulestia', 'puntos' => 778, 'genero' => 'F'],
+            ['nombre' => 'Tomás Naranjo', 'puntos' => 764, 'genero' => 'M'],
+            ['nombre' => 'Fernanda Moya', 'puntos' => 748, 'genero' => 'F'],
+            ['nombre' => 'Gabriel Viera', 'puntos' => 732, 'genero' => 'M'],
+            ['nombre' => 'Lisseth Orellana', 'puntos' => 718, 'genero' => 'F'],
+            ['nombre' => 'Ariel Segura', 'puntos' => 700, 'genero' => 'M'],
+        ];
+
+        $operarios = [
+            ['nombre' => 'Darío Ulloa', 'puntos' => 940, 'genero' => 'M'],
+            ['nombre' => 'Karina Gamboa', 'puntos' => 922, 'genero' => 'F'],
+            ['nombre' => 'Wilson Tapia', 'puntos' => 905, 'genero' => 'M'],
+            ['nombre' => 'Jessica Almeida', 'puntos' => 890, 'genero' => 'F'],
+            ['nombre' => 'Rafael Caicedo', 'puntos' => 875, 'genero' => 'M'],
+            ['nombre' => 'Lorena Rivas', 'puntos' => 860, 'genero' => 'F'],
+            ['nombre' => 'Jonathan Cobo', 'puntos' => 846, 'genero' => 'M'],
+            ['nombre' => 'Vanessa Chiluisa', 'puntos' => 832, 'genero' => 'F'],
+            ['nombre' => 'Santiago Lema', 'puntos' => 816, 'genero' => 'M'],
+            ['nombre' => 'Marlene Guacho', 'puntos' => 802, 'genero' => 'F'],
+            ['nombre' => 'Patricio Asanza', 'puntos' => 787, 'genero' => 'M'],
+            ['nombre' => 'Daniela Celi', 'puntos' => 772, 'genero' => 'F'],
+            ['nombre' => 'Mauricio Aguiar', 'puntos' => 758, 'genero' => 'M'],
+            ['nombre' => 'Pamela Yánez', 'puntos' => 744, 'genero' => 'F'],
+            ['nombre' => 'Ricardo Cacuango', 'puntos' => 730, 'genero' => 'M'],
+            ['nombre' => 'Denisse Enríquez', 'puntos' => 716, 'genero' => 'F'],
+            ['nombre' => 'Fernando Jumbo', 'puntos' => 700, 'genero' => 'M'],
+        ];
+
+        $plegadores = [
+            ['nombre' => 'Ulises Cárdenas', 'puntos' => 950, 'genero' => 'M'],
+            ['nombre' => 'Camila Guaraca', 'puntos' => 932, 'genero' => 'F'],
+            ['nombre' => 'David Guevara', 'puntos' => 914, 'genero' => 'M'],
+            ['nombre' => 'Sonia Peralta', 'puntos' => 896, 'genero' => 'F'],
+            ['nombre' => 'Henry Morocho', 'puntos' => 880, 'genero' => 'M'],
+            ['nombre' => 'Viviana Peñafiel', 'puntos' => 864, 'genero' => 'F'],
+            ['nombre' => 'Brian Montero', 'puntos' => 848, 'genero' => 'M'],
+            ['nombre' => 'Mayra Chicaiza', 'puntos' => 833, 'genero' => 'F'],
+            ['nombre' => 'Leonardo Cadena', 'puntos' => 818, 'genero' => 'M'],
+            ['nombre' => 'María José Calvopiña', 'puntos' => 804, 'genero' => 'F'],
+            ['nombre' => 'Diego Larrea', 'puntos' => 788, 'genero' => 'M'],
+            ['nombre' => 'Luisa Chango', 'puntos' => 774, 'genero' => 'F'],
+            ['nombre' => 'Hernán Suárez', 'puntos' => 760, 'genero' => 'M'],
+            ['nombre' => 'Mónica Cañar', 'puntos' => 746, 'genero' => 'F'],
+            ['nombre' => 'Sergio Cañizares', 'puntos' => 732, 'genero' => 'M'],
+            ['nombre' => 'Rocío Basantes', 'puntos' => 718, 'genero' => 'F'],
+            ['nombre' => 'Alexis Villegas', 'puntos' => 704, 'genero' => 'M'],
+        ];
+
         return [
             [
                 'nombre' => 'Troqueladores',
@@ -93,6 +173,30 @@ class PodioController extends Controller
                 'icono' => 'fa-scissors',
                 'color' => '#f59e0b',
                 'empleados' => $this->processEmpleados($guillotinistas),
+            ],
+            [
+                'nombre' => 'Auxiliares',
+                'icono' => 'fa-people-group',
+                'color' => '#10b981',
+                'empleados' => $this->processEmpleados($auxiliares),
+            ],
+            [
+                'nombre' => 'Litógrafos',
+                'icono' => 'fa-palette',
+                'color' => '#ec4899',
+                'empleados' => $this->processEmpleados($litografos),
+            ],
+            [
+                'nombre' => 'Operarios',
+                'icono' => 'fa-industry',
+                'color' => '#3b82f6',
+                'empleados' => $this->processEmpleados($operarios),
+            ],
+            [
+                'nombre' => 'Plegadores',
+                'icono' => 'fa-layer-group',
+                'color' => '#ef4444',
+                'empleados' => $this->processEmpleados($plegadores),
             ],
         ];
     }

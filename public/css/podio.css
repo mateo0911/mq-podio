@@ -5,20 +5,20 @@
 
 /* ---------- Variables ---------- */
 :root {
-    --gold: #FFD700;
+    --gold: #ffd700;
     --gold-dark: #b8960f;
     --gold-light: #fff4cc;
-    --gold-bg: linear-gradient(135deg, #FFD700, #FFA500);
+    --gold-bg: linear-gradient(135deg, #ffd700, #ffa500);
 
-    --silver: #C0C0C0;
+    --silver: #c0c0c0;
     --silver-dark: #808080;
     --silver-light: #e8e8e8;
     --silver-bg: linear-gradient(135deg, #e0e0e0, #a0a0a0);
 
-    --bronze: #CD7F32;
+    --bronze: #cd7f32;
     --bronze-dark: #8b5a2b;
     --bronze-light: #f0d5b0;
-    --bronze-bg: linear-gradient(135deg, #CD7F32, #8B4513);
+    --bronze-bg: linear-gradient(135deg, #cd7f32, #8b4513);
 
     --bg-dark: #0f0f23;
     --bg-card: #1a1a2e;
@@ -34,7 +34,7 @@
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: "Poppins", sans-serif;
     background: var(--bg-dark);
     color: var(--text-primary);
     min-height: 100vh;
@@ -43,7 +43,12 @@ body {
 
 /* ---------- Navbar ---------- */
 .bg-navbar {
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%) !important;
+    background: linear-gradient(
+        135deg,
+        #1a1a2e 0%,
+        #16213e 50%,
+        #0f3460 100%
+    ) !important;
     border-bottom: 2px solid rgba(99, 102, 241, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
@@ -57,14 +62,21 @@ body {
 }
 
 @keyframes trophyPulse {
-    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5)); }
-    50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)); }
+    0%,
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+    }
+    50% {
+        transform: scale(1.1);
+        filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
+    }
 }
 
 .brand-text {
     font-size: 1.5rem;
     font-weight: 800;
-    background: linear-gradient(to right, var(--gold), #FFA500, var(--gold));
+    background: linear-gradient(to right, var(--gold), #ffa500, var(--gold));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -84,8 +96,15 @@ body {
 }
 
 @keyframes starPulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.8); }
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.5;
+        transform: scale(0.8);
+    }
 }
 
 /* ---------- Hero Section ---------- */
@@ -96,16 +115,28 @@ body {
 }
 
 .hero-section::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     background:
-        radial-gradient(ellipse at 20% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(6, 182, 212, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at 50% 80%, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
+        radial-gradient(
+            ellipse at 20% 50%,
+            rgba(99, 102, 241, 0.08) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 80% 20%,
+            rgba(6, 182, 212, 0.08) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse at 50% 80%,
+            rgba(245, 158, 11, 0.05) 0%,
+            transparent 50%
+        );
     pointer-events: none;
     z-index: 0;
 }
@@ -117,6 +148,7 @@ body {
 
 /* ---------- Area Tabs ---------- */
 .area-tabs {
+    margin-top: 27px;
     gap: 0.5rem;
 }
 
@@ -134,7 +166,7 @@ body {
 }
 
 .area-tab-btn::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
     background: var(--area-color);
@@ -158,7 +190,8 @@ body {
     color: #fff !important;
     border-color: var(--area-color) !important;
     transform: translateY(-2px);
-    box-shadow: 0 5px 25px color-mix(in srgb, var(--area-color) 30%, transparent);
+    box-shadow: 0 5px 25px
+        color-mix(in srgb, var(--area-color) 30%, transparent);
 }
 
 .area-tab-btn.active::before {
@@ -180,6 +213,251 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     letter-spacing: 1px;
     text-transform: uppercase;
+}
+
+/* ---------- Podios Globales ---------- */
+.podios-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* ← siempre 3 columnas */
+    gap: 1.25rem;
+    width: 100%;
+}
+
+/* Modo carrusel: un podio visible cada vez con transición divertida */
+.podios-grid.is-rotating {
+    position: relative;
+    display: block;
+    touch-action: pan-y;
+    cursor: grab;
+}
+
+.podios-grid.is-rotating:active {
+    cursor: grabbing;
+}
+
+.podios-grid.is-rotating .podio-area-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: min(100%, 1320px);
+    margin-inline: auto;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(70px) scale(0.96) rotate(-0.4deg);
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s cubic-bezier(0.2, 0.65, 0.2, 1),
+        visibility 0s linear 0.8s;
+}
+
+.podios-grid.is-rotating .podio-area-card {
+    padding: 2rem 2rem 1.2rem;
+}
+
+.podios-grid.is-rotating .podio-wrapper {
+    max-width: 1100px;
+    gap: 1.5rem;
+}
+
+.podios-grid.is-rotating .avatar-card {
+    width: 145px;
+    height: 170px;
+}
+
+.podios-grid.is-rotating .avatar-card-gold {
+    width: 185px;
+    height: 210px;
+}
+
+.podios-grid.is-rotating .podio-name {
+    font-size: 1.1rem;
+}
+
+.podios-grid.is-rotating .podio-name-gold {
+    font-size: 1.35rem;
+}
+
+.podios-grid.is-rotating .podio-points {
+    font-size: 1rem;
+}
+
+.podios-grid.is-rotating .podio-medal-label {
+    font-size: 0.92rem;
+}
+
+.podios-grid.is-rotating .podio-pedestal {
+    max-width: 190px;
+}
+
+.podios-grid.is-rotating .pedestal-gold {
+    height: 170px;
+}
+
+.podios-grid.is-rotating .pedestal-silver {
+    height: 135px;
+}
+
+.podios-grid.is-rotating .pedestal-bronze {
+    height: 108px;
+}
+
+/* ---------- Carrusel Manual ---------- */
+.podio-carousel-controls {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    flex-wrap: wrap;
+    margin: 0.2rem 0 1.1rem;
+}
+
+.podio-progress-wrap {
+    display: flex;
+    justify-content: center;
+    margin: 0.25rem 0 0.95rem;
+}
+
+.podios-grid.is-rotating + .podio-carousel-controls {
+    display: flex;
+}
+
+.podio-nav-btn {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+.podio-progress {
+    width: min(620px, 92%);
+    height: 7px;
+    border-radius: 99px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: inset 0 1px 8px rgba(0, 0, 0, 0.35);
+}
+
+.podio-progress-bar {
+    display: block;
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    background: linear-gradient(90deg, #6366f1, #06b6d4, #10b981);
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.5);
+}
+
+.podio-nav-btn:hover {
+    background: rgba(99, 102, 241, 0.45);
+    border-color: rgba(99, 102, 241, 0.8);
+    transform: translateY(-1px) scale(1.05);
+}
+
+.podio-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    cursor: ew-resize;
+    user-select: none;
+}
+
+.podio-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.25s ease;
+}
+
+.podio-dot:hover {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.podio-dot.is-active {
+    width: 24px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #6366f1, #06b6d4);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.45);
+}
+
+.podios-grid.is-dragging {
+    cursor: grabbing;
+}
+
+.podios-grid.is-rotating .podio-area-card.is-active {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateX(0) scale(1) rotate(0deg);
+    z-index: 3;
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s cubic-bezier(0.2, 0.65, 0.2, 1),
+        visibility 0s;
+}
+
+.podios-grid.is-rotating.is-dragging .podio-area-card.is-active {
+    transition: none;
+    transform: translateX(var(--drag-x, 0px)) scale(1) rotate(0deg);
+}
+
+.podios-grid.is-rotating .podio-area-card.is-leaving {
+    visibility: visible;
+    opacity: 0;
+    transform: translateX(-70px) scale(0.96) rotate(0.4deg);
+    z-index: 2;
+}
+
+.podio-area-card {
+    background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.04),
+        rgba(255, 255, 255, 0.02)
+    );
+    border: 1px solid
+        color-mix(in srgb, var(--area-color) 40%, rgba(255, 255, 255, 0.06));
+    border-radius: 18px;
+    padding: 1.5rem 1.25rem 0.75rem;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
+    overflow: hidden;
+    min-width: 0;
+}
+
+.podio-area-card .podio-container {
+    margin-bottom: 0;
+}
+
+.podio-area-card .podio-wrapper {
+    max-width: 100%;
+    gap: 0.75rem;  /* ← más espacio entre los 3 puestos */
+}
+
+.podio-area-card .podio-item {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.podio-area-card .podio-pedestal {
+    width: 100%;
+}
+
+.podio-area-card .podio-name {
+    max-width: 100%;
+    padding: 0 0.2rem;
 }
 
 /* ---------- PODIO VISUAL ---------- */
@@ -224,8 +502,8 @@ body {
    ============================================ */
 .avatar-card {
     position: relative;
-    width: 130px;
-    height: 150px;
+    width: 110px;
+    height: 130px;
     margin-bottom: 0.8rem;
     perspective: 800px;
     cursor: pointer;
@@ -233,19 +511,29 @@ body {
 }
 
 .avatar-card-gold {
-    width: 155px;
-    height: 175px;
+    width: 135px;
+    height: 155px;
     animation: avatarFloatGold 3.5s ease-in-out infinite;
 }
 
 @keyframes avatarFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-6px);
+    }
 }
 
 @keyframes avatarFloatGold {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* Inner container — receives 3D tilt */
@@ -256,8 +544,9 @@ body {
     border-radius: 24px;
     overflow: hidden;
     z-index: 2;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                box-shadow 0.5s ease;
+    transition:
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        box-shadow 0.5s ease;
     transform-style: preserve-3d;
 }
 
@@ -299,8 +588,9 @@ body {
     font-size: 3.5rem;
     color: rgba(255, 255, 255, 0.85);
     z-index: 1;
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                color 0.4s ease;
+    transition:
+        transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+        color 0.4s ease;
 }
 
 .avatar-card-gold .avatar-3d-icon {
@@ -404,7 +694,7 @@ body {
 
 /* ---- Bottom gradient fade (soft depth) ---- */
 .avatar-3d-wrap::after {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     left: 0;
@@ -430,7 +720,9 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
 }
 
 .avatar-card:hover .avatar-card-badge {
@@ -439,17 +731,29 @@ body {
 }
 
 .badge-gold {
-    background: linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 165, 0, 0.9));
+    background: linear-gradient(
+        135deg,
+        rgba(255, 215, 0, 0.9),
+        rgba(255, 165, 0, 0.9)
+    );
     color: #5a4300;
 }
 
 .badge-silver {
-    background: linear-gradient(135deg, rgba(224, 224, 224, 0.9), rgba(160, 160, 160, 0.9));
+    background: linear-gradient(
+        135deg,
+        rgba(224, 224, 224, 0.9),
+        rgba(160, 160, 160, 0.9)
+    );
     color: #3a3a3a;
 }
 
 .badge-bronze {
-    background: linear-gradient(135deg, rgba(232, 165, 90, 0.9), rgba(139, 69, 19, 0.9));
+    background: linear-gradient(
+        135deg,
+        rgba(232, 165, 90, 0.9),
+        rgba(139, 69, 19, 0.9)
+    );
     color: #fff;
 }
 
@@ -501,7 +805,7 @@ body {
 
 .podio-name-gold {
     font-size: 1.1rem;
-    background: linear-gradient(to right, var(--gold), #FFA500);
+    background: linear-gradient(to right, var(--gold), #ffa500);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -551,7 +855,8 @@ body {
 
 /* Pedestals */
 .podio-pedestal {
-    width: 160px;
+    width: 100%;    /* ← se adapta al ancho disponible en el flex item */
+    max-width: 140px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -561,7 +866,7 @@ body {
 }
 
 .podio-pedestal::before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -578,30 +883,48 @@ body {
 
 .pedestal-gold {
     height: 140px;
-    background: linear-gradient(180deg, rgba(255, 215, 0, 0.3) 0%, rgba(255, 165, 0, 0.15) 100%);
+    background: linear-gradient(
+        180deg,
+        rgba(255, 215, 0, 0.3) 0%,
+        rgba(255, 165, 0, 0.15) 100%
+    );
     border: 1px solid rgba(255, 215, 0, 0.2);
     border-bottom: none;
 }
 
-.pedestal-gold::before { background: var(--gold-bg); }
+.pedestal-gold::before {
+    background: var(--gold-bg);
+}
 
 .pedestal-silver {
     height: 110px;
-    background: linear-gradient(180deg, rgba(192, 192, 192, 0.25) 0%, rgba(128, 128, 128, 0.1) 100%);
+    background: linear-gradient(
+        180deg,
+        rgba(192, 192, 192, 0.25) 0%,
+        rgba(128, 128, 128, 0.1) 100%
+    );
     border: 1px solid rgba(192, 192, 192, 0.2);
     border-bottom: none;
 }
 
-.pedestal-silver::before { background: var(--silver-bg); }
+.pedestal-silver::before {
+    background: var(--silver-bg);
+}
 
 .pedestal-bronze {
     height: 85px;
-    background: linear-gradient(180deg, rgba(205, 127, 50, 0.25) 0%, rgba(139, 69, 19, 0.1) 100%);
+    background: linear-gradient(
+        180deg,
+        rgba(205, 127, 50, 0.25) 0%,
+        rgba(139, 69, 19, 0.1) 100%
+    );
     border: 1px solid rgba(205, 127, 50, 0.2);
     border-bottom: none;
 }
 
-.pedestal-bronze::before { background: var(--bronze-bg); }
+.pedestal-bronze::before {
+    background: var(--bronze-bg);
+}
 
 /* ---------- Confetti ---------- */
 .confetti-container {
@@ -632,7 +955,8 @@ body {
         opacity: 1;
     }
     100% {
-        transform: translateX(calc(var(--x) * 3)) translateY(500px) rotate(720deg);
+        transform: translateX(calc(var(--x) * 3)) translateY(500px)
+            rotate(720deg);
         opacity: 0;
     }
 }
@@ -679,9 +1003,9 @@ table.dataTable {
 .table-ranking.table {
     --bs-table-bg: transparent !important;
     --bs-table-color: var(--text-primary) !important;
-    --bs-table-striped-bg: rgba(255,255,255,0.03) !important;
-    --bs-table-hover-bg: rgba(255,255,255,0.06) !important;
-    --bs-table-border-color: rgba(255,255,255,0.06) !important;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.03) !important;
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.06) !important;
+    --bs-table-border-color: rgba(255, 255, 255, 0.06) !important;
     background-color: transparent !important;
 }
 
@@ -909,8 +1233,13 @@ table.dataTable tbody tr.row-bronce:hover td {
 }
 
 @keyframes shimmer {
-    0%, 100% { filter: brightness(1); }
-    50% { filter: brightness(1.3); }
+    0%,
+    100% {
+        filter: brightness(1);
+    }
+    50% {
+        filter: brightness(1.3);
+    }
 }
 
 /* ---------- DataTables dark theme overrides ---------- */
@@ -1060,6 +1389,44 @@ table.dataTable.table-bordered {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
+    .podios-grid {
+        gap: 1rem;
+    }
+
+    .podio-area-card {
+        padding: 0.85rem 0.75rem 0.35rem;
+    }
+
+    .podios-grid.is-rotating .podio-area-card {
+        padding: 1.1rem 0.8rem 0.45rem;
+    }
+
+    .podios-grid.is-rotating .podio-wrapper {
+        gap: 0.55rem;
+    }
+
+    .podios-grid.is-rotating .avatar-card {
+        width: 105px;
+        height: 122px;
+    }
+
+    .podios-grid.is-rotating .avatar-card-gold {
+        width: 126px;
+        height: 145px;
+    }
+
+    .podios-grid.is-rotating .podio-name {
+        font-size: 0.82rem;
+    }
+
+    .podios-grid.is-rotating .podio-name-gold {
+        font-size: 0.95rem;
+    }
+
+    .podios-grid.is-rotating .podio-pedestal {
+        max-width: 120px;
+    }
+
     .podio-wrapper {
         gap: 0.4rem;
     }
@@ -1102,9 +1469,15 @@ table.dataTable.table-bordered {
         font-size: 1.5rem;
     }
 
-    .pedestal-gold { height: 110px; }
-    .pedestal-silver { height: 85px; }
-    .pedestal-bronze { height: 65px; }
+    .pedestal-gold {
+        height: 110px;
+    }
+    .pedestal-silver {
+        height: 85px;
+    }
+    .pedestal-bronze {
+        height: 65px;
+    }
 
     .pedestal-number {
         font-size: 2rem;
