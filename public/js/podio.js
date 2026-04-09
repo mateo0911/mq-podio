@@ -429,10 +429,15 @@ $(document).ready(function () {
 
     initPodioRotation();
 
+    // Animate counters when switching to the "Mejor Area" view tab
+    $('button[data-bs-target="#podio-view-area"]').on("shown.bs.tab", function () {
+        resetAndAnimateCounters($("#podio-view-area"));
+    });
+
     // ============================================
     // Tab Change Animations
     // ============================================
-    $('button[data-bs-toggle="pill"]').on("shown.bs.tab", function (e) {
+    $('#areaTabs button[data-bs-toggle="pill"]').on("shown.bs.tab", function (e) {
         var target = $(e.target).data("bs-target");
         var $pane = $(target);
 

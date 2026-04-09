@@ -9,8 +9,9 @@ class PodioController extends Controller
     public function index()
     {
         $areas = $this->getAreas();
+        $areaRanking = $this->getAreaRanking($areas);
 
-        return view('podio.index', compact('areas'));
+        return view('podio.index', compact('areas', 'areaRanking'));
     }
 
     private function getAreas(): array
@@ -219,5 +220,34 @@ class PodioController extends Controller
         }
 
         return $empleados;
+    }
+
+    private function getAreaRanking(array $areas): array
+    {
+        $ranking = array_map(function ($area) {
+            $total = array_reduce($area['empleados'], fn($carry, $emp) => $carry + $emp['puntos'], 0);
+
+            return [
+                'nombre' => $area['nombre'],
+                'icono' => $area['icono'],
+                'color' => $area['color'],
+                'total_puntos' => $total,
+                'cantidad_empleados' => count($area['empleados']),
+            ];
+        }, $areas);
+
+        usort($ranking, fn($a, $b) => $b['total_puntos'] <=> $a['total_puntos']);
+
+        foreach ($ranking as $i => &$area) {
+            $area['posicion'] = $i + 1;
+            $area['medalla'] = match ($i) {
+                0 => 'oro',
+                1 => 'plata',
+                2 => 'bronce',
+                default => null,
+            };
+        }
+
+        return $ranking;
     }
 }

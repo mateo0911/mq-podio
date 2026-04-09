@@ -13,6 +13,40 @@
             <p class="lead text-white-50">Reconocemos el esfuerzo y dedicación de nuestros mejores empleados</p>
         </div>
 
+        <ul class="nav nav-pills justify-content-center view-mode-tabs mb-4" id="viewModeTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button
+                    class="nav-link view-mode-btn active"
+                    id="view-empleado-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#podio-view-empleado"
+                    type="button"
+                    role="tab"
+                    aria-controls="podio-view-empleado"
+                    aria-selected="true"
+                >
+                    <i class="fa-solid fa-user-tie me-2"></i>Podio por Empleado
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button
+                    class="nav-link view-mode-btn"
+                    id="view-area-tab"
+                    data-bs-toggle="pill"
+                    data-bs-target="#podio-view-area"
+                    type="button"
+                    role="tab"
+                    aria-controls="podio-view-area"
+                    aria-selected="false"
+                >
+                    <i class="fa-solid fa-chart-line me-2"></i>Mejor Area
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="viewModeTabsContent">
+            <div class="tab-pane fade show active" id="podio-view-empleado" role="tabpanel" aria-labelledby="view-empleado-tab">
+
         {{-- Podios generales (todas las áreas visibles) --}}
         <div class="podio-progress-wrap" id="podioProgressWrap" aria-hidden="true">
             <div class="podio-progress">
@@ -88,6 +122,15 @@
                                 </div>
                                 <div class="podio-pedestal pedestal-gold">
                                     <span class="pedestal-number">1</span>
+                                </div>
+                                <div class="podio-fireworks" aria-hidden="true">
+                                    <span class="firework firework-left"></span>
+                                    <span class="firework firework-right"></span>
+                                </div>
+                                <div class="podio-gold-rain" aria-hidden="true">
+                                    @for($r = 0; $r < 14; $r++)
+                                        <span class="gold-rain-piece" style="--delay: {{ rand(0,18) / 10 }}s; --x: {{ rand(-95,95) }}px; --rot: {{ rand(-35,35) }}deg; --color: {{ ['#FFD700','#FFE066','#FDE68A','#C0C0C0','#06b6d4'][rand(0,4)] }}"></span>
+                                    @endfor
                                 </div>
                             </div>
 
@@ -267,6 +310,119 @@
 
                 </div>
             @endforeach
+        </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="podio-view-area" role="tabpanel" aria-labelledby="view-area-tab">
+                @php
+                    $topAreas = array_slice($areaRanking, 0, 3);
+                @endphp
+
+                @if(count($topAreas) >= 3)
+                    <div class="text-center mb-3">
+                        <span class="area-badge" style="background: linear-gradient(135deg, #0ea5e9, #6366f1)">
+                            <i class="fa-solid fa-building me-2"></i>Top 3 Areas por Acumulado de Puntos
+                        </span>
+                    </div>
+
+                    <div class="podio-area-card podio-area-summary" style="--area-color: #0ea5e9;">
+                        <div class="podio-container">
+                            <div class="podio-wrapper">
+                                <div class="podio-item podio-plata">
+                                    <div class="avatar-card avatar-card-silver" data-tilt>
+                                        <div class="avatar-card-inner">
+                                            <div class="avatar-3d-wrap">
+                                                <i class="fa-solid {{ $topAreas[1]['icono'] }} avatar-3d-icon"></i>
+                                            </div>
+                                            <div class="avatar-card-shine"></div>
+                                            <div class="avatar-card-badge badge-silver">
+                                                <i class="fa-solid fa-medal"></i> 2
+                                            </div>
+                                        </div>
+                                        <div class="avatar-card-shadow"></div>
+                                    </div>
+                                    <h5 class="podio-name">{{ $topAreas[1]['nombre'] }}</h5>
+                                    <div class="podio-points">
+                                        <i class="fa-solid fa-star"></i>
+                                        <span class="points-counter" data-target="{{ $topAreas[1]['total_puntos'] }}">0</span> pts
+                                    </div>
+                                    <div class="podio-medal-label silver-label">
+                                        <i class="fa-solid fa-medal"></i> Plata
+                                    </div>
+                                    <div class="podio-pedestal pedestal-silver">
+                                        <span class="pedestal-number">2</span>
+                                    </div>
+                                </div>
+
+                                <div class="podio-item podio-oro">
+                                    <div class="crown-icon animate__animated animate__swing animate__infinite animate__slow">
+                                        <i class="fa-solid fa-crown"></i>
+                                    </div>
+                                    <div class="avatar-card avatar-card-gold" data-tilt>
+                                        <div class="avatar-card-inner">
+                                            <div class="avatar-3d-wrap avatar-3d-wrap-gold">
+                                                <i class="fa-solid {{ $topAreas[0]['icono'] }} avatar-3d-icon"></i>
+                                            </div>
+                                            <div class="avatar-card-shine"></div>
+                                            <div class="avatar-card-badge badge-gold">
+                                                <i class="fa-solid fa-trophy"></i> 1
+                                            </div>
+                                        </div>
+                                        <div class="avatar-card-shadow"></div>
+                                    </div>
+                                    <h5 class="podio-name podio-name-gold">{{ $topAreas[0]['nombre'] }}</h5>
+                                    <div class="podio-points">
+                                        <i class="fa-solid fa-star"></i>
+                                        <span class="points-counter" data-target="{{ $topAreas[0]['total_puntos'] }}">0</span> pts
+                                    </div>
+                                    <div class="podio-medal-label gold-label">
+                                        <i class="fa-solid fa-trophy"></i> Oro
+                                    </div>
+                                    <div class="podio-pedestal pedestal-gold">
+                                        <span class="pedestal-number">1</span>
+                                    </div>
+                                    <div class="podio-fireworks" aria-hidden="true">
+                                        <span class="firework firework-left"></span>
+                                        <span class="firework firework-right"></span>
+                                    </div>
+                                    <div class="podio-gold-rain" aria-hidden="true">
+                                        @for($r = 0; $r < 14; $r++)
+                                            <span class="gold-rain-piece" style="--delay: {{ rand(0,18) / 10 }}s; --x: {{ rand(-95,95) }}px; --rot: {{ rand(-35,35) }}deg; --color: {{ ['#FFD700','#FFE066','#FDE68A','#C0C0C0','#06b6d4'][rand(0,4)] }}"></span>
+                                        @endfor
+                                    </div>
+                                </div>
+
+                                <div class="podio-item podio-bronce">
+                                    <div class="avatar-card avatar-card-bronze" data-tilt>
+                                        <div class="avatar-card-inner">
+                                            <div class="avatar-3d-wrap">
+                                                <i class="fa-solid {{ $topAreas[2]['icono'] }} avatar-3d-icon"></i>
+                                            </div>
+                                            <div class="avatar-card-shine"></div>
+                                            <div class="avatar-card-badge badge-bronze">
+                                                <i class="fa-solid fa-medal"></i> 3
+                                            </div>
+                                        </div>
+                                        <div class="avatar-card-shadow"></div>
+                                    </div>
+                                    <h5 class="podio-name">{{ $topAreas[2]['nombre'] }}</h5>
+                                    <div class="podio-points">
+                                        <i class="fa-solid fa-star"></i>
+                                        <span class="points-counter" data-target="{{ $topAreas[2]['total_puntos'] }}">0</span> pts
+                                    </div>
+                                    <div class="podio-medal-label bronze-label">
+                                        <i class="fa-solid fa-medal"></i> Bronce
+                                    </div>
+                                    <div class="podio-pedestal pedestal-bronze">
+                                        <span class="pedestal-number">3</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 </div>
