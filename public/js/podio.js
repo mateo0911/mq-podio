@@ -425,6 +425,20 @@ $(document).ready(function () {
         $(window).on("resize", function () {
             updateGridHeight($cards.eq(activeIndex));
         });
+
+        // Pause carousel when leaving "Podio por Empleado" tab
+        $('#view-empleado-tab').on('hidden.bs.tab', function () {
+            stopRotation(false);
+        });
+
+        // Resume carousel and recalculate height when returning to "Podio por Empleado" tab
+        $('#view-empleado-tab').on('shown.bs.tab', function () {
+            $cards.removeClass('is-leaving');
+            var $active = $cards.eq(activeIndex);
+            updateGridHeight($active);
+            resetAndAnimateCounters($active);
+            startRotation();
+        });
     }
 
     initPodioRotation();
